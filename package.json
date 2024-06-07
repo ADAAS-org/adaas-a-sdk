@@ -48,7 +48,7 @@
   },
   "homepage": "https://github.com/ADAAS-org/adaas-adf-auth#readme",
   "dependencies": {
-    "@adaas/a-auth": "^0.0.2",
+    "@adaas/a-auth": "^0.0.8",
     "@types/node": "^20.10.0",
     "axios": "^1.6.2"
   },
