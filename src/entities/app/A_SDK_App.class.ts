@@ -1,4 +1,4 @@
-import { A_AUTH_Authenticator } from "@adaas/adaas-a-auth";
+import { A_AUTH_Authenticator } from "@adaas/a-auth";
 import { A_SDK_TYPES__App_APIEntity, A_SDK_TYPES__App_JSONEntity } from "./types/A_SDK_App.class";
 
 export class A_SDK_App {

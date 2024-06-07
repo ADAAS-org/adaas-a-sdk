@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.A_SDK_App = void 0;
-const adaas_a_auth_1 = require("@adaas/adaas-a-auth");
+const a_auth_1 = require("@adaas/a-auth");
 class A_SDK_App {
     constructor(identity) {
         this.identifyInitializer(identity);
@@ -49,7 +49,7 @@ class A_SDK_App {
     }
     getSSOUrl(redirectURL) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield adaas_a_auth_1.A_AUTH_Authenticator.getSSOUrl(redirectURL);
+            return yield a_auth_1.A_AUTH_Authenticator.getSSOUrl(redirectURL);
         });
     }
     toJSON() {
