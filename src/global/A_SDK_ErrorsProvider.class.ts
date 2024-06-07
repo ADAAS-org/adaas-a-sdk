@@ -30,7 +30,7 @@ export class A_SDK_ErrorsProvider {
     addRegistry(registry: A_TYPES__Dictionary<A_SDK_TYPES__Error>) {
         const errors = Object.values(registry);
 
-        errors.forEach(this.registerError);
+        errors.forEach(err => this.registerError(err));
     }
 
 

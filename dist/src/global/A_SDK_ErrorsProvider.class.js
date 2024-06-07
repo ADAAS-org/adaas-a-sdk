@@ -24,7 +24,7 @@ class A_SDK_ErrorsProvider {
      */
     addRegistry(registry) {
         const errors = Object.values(registry);
-        errors.forEach(this.registerError);
+        errors.forEach(err => this.registerError(err));
     }
     /**
      *
