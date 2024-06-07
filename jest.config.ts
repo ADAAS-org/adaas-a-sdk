@@ -8,11 +8,11 @@ const config: Config.InitialOptions = {
         '^.+\\.tsx?$': 'ts-jest'
     },
     moduleNameMapper: {
-        "@adaas/a-auth/constants/(.*)": ["<rootDir>/src/constants/$1"],
-        "@adaas/a-auth/entities/(.*)": ["<rootDir>/src/entities/$1"],
-        "@adaas/a-auth/global/(.*)": ["<rootDir>/src/global/$1"],
-        "@adaas/a-auth/types/(.*)": ["<rootDir>/src/types/$1"],
-        "@adaas/a-auth/helpers/(.*)": ["<rootDir>/src/helpers/$1"],
+        "@adaas/a-sdk/constants/(.*)": ["<rootDir>/src/constants/$1"],
+        "@adaas/a-sdk/entities/(.*)": ["<rootDir>/src/entities/$1"],
+        "@adaas/a-sdk/global/(.*)": ["<rootDir>/src/global/$1"],
+        "@adaas/a-sdk/types/(.*)": ["<rootDir>/src/types/$1"],
+        "@adaas/a-sdk/helpers/(.*)": ["<rootDir>/src/helpers/$1"],
     }
 
 };
