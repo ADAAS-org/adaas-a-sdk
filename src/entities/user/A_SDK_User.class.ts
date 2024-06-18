@@ -1,33 +1,36 @@
-import { A_SDK_TYPES__User_APIEntity, A_SDK_TYPES__User_JSONEntity } from "./types/A_SDK_User.types";
+import { A_Entity } from "@adaas/a-sdk-types";
+import { A_SDK_TYPES__User_APIEntity } from "./types/A_SDK_User.types";
 
-export class A_SDK_User {
+export class A_SDK_User extends A_Entity<
+    A_SDK_TYPES__User_APIEntity
+> {
 
-    id?: number
-    identity!: string;
     createdAt?: Date;
     updatedAt?: Date;
 
 
-    constructor(identity: string | A_SDK_TYPES__User_APIEntity) {
-        this.identifyInitializer(identity);
+    constructor(aseidOrEntity: string | A_SDK_TYPES__User_APIEntity) {
+        super(typeof aseidOrEntity === 'string' ? aseidOrEntity : aseidOrEntity.aseid);
+
+        this.identifyInitializer(aseidOrEntity);
     }
 
 
-    protected identifyInitializer(identity: string | A_SDK_TYPES__User_APIEntity) {
-        if (typeof identity === 'string') {
-            this.identity = identity;
+    protected identifyInitializer(aseidOrEntity: string | A_SDK_TYPES__User_APIEntity) {
+        if (typeof aseidOrEntity === 'string') {
+            const aseid = aseidOrEntity as string;
+
+            this.aseid = aseid;
         } else {
-            this.fromDB(identity);
+            const entity = aseidOrEntity as A_SDK_TYPES__User_APIEntity;
+
+            this.fromDB(entity);
         }
     }
 
 
-    
-
-
     private fromDB(dbEntity: A_SDK_TYPES__User_APIEntity) {
-        this.id = dbEntity.id;
-        this.identity = dbEntity.identity;
+        this.aseid = dbEntity.aseid;
 
         if (dbEntity.created_at)
             this.createdAt = new Date(dbEntity.created_at);

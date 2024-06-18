@@ -11,37 +11,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.A_SDK_App = void 0;
 const a_auth_1 = require("@adaas/a-auth");
-class A_SDK_App {
-    constructor(identity) {
-        this.identifyInitializer(identity);
+const a_sdk_types_1 = require("@adaas/a-sdk-types");
+class A_SDK_App extends a_sdk_types_1.A_Entity {
+    constructor(aseidOrEntity) {
+        super(aseidOrEntity);
+        this.identifyInitializer(aseidOrEntity);
     }
-    identifyInitializer(identity) {
+    identifyInitializer(aseidOrEntity) {
         switch (true) {
-            case typeof identity === 'string':
-                this.identity = identity;
+            case typeof aseidOrEntity === 'string':
+                this.aseid = aseidOrEntity;
                 break;
-            case typeof identity === 'object' && !!identity.id:
-                this.fromDB(identity);
+            case typeof aseidOrEntity === 'object' && !!aseidOrEntity.id:
+                this.fromDB(aseidOrEntity);
                 break;
-            case typeof identity === 'object' && !identity.id:
-                this.fromJSON(identity);
+            case typeof aseidOrEntity === 'object' && !aseidOrEntity.id:
+                this.fromJSON(aseidOrEntity);
                 break;
             default:
                 return;
         }
     }
-    // async load(redirectURL: string) {
-    // }
     fromDB(dbEntity) {
-        this.id = dbEntity.id;
-        this.identity = dbEntity.identity;
+        this.aseid = dbEntity.aseid;
         this.name = dbEntity.name;
         this.description = dbEntity.description;
         this.createdAt = new Date(dbEntity.created_at);
         this.updatedAt = new Date(dbEntity.updated_at);
     }
     fromJSON(serialized) {
-        this.identity = serialized.identity;
+        this.aseid = serialized.aseid;
         this.name = serialized.name;
         this.description = serialized.description;
         this.createdAt = new Date(serialized.createdAt);
@@ -54,7 +53,7 @@ class A_SDK_App {
     }
     toJSON() {
         return {
-            identity: this.identity,
+            aseid: this.aseid,
             name: this.name,
             description: this.description,
             createdAt: this.createdAt.toISOString(),

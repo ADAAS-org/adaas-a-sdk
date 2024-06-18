@@ -1,21 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.A_SDK_User = void 0;
-class A_SDK_User {
-    constructor(identity) {
-        this.identifyInitializer(identity);
+const a_sdk_types_1 = require("@adaas/a-sdk-types");
+class A_SDK_User extends a_sdk_types_1.A_Entity {
+    constructor(aseidOrEntity) {
+        super(typeof aseidOrEntity === 'string' ? aseidOrEntity : aseidOrEntity.aseid);
+        this.identifyInitializer(aseidOrEntity);
     }
-    identifyInitializer(identity) {
-        if (typeof identity === 'string') {
-            this.identity = identity;
+    identifyInitializer(aseidOrEntity) {
+        if (typeof aseidOrEntity === 'string') {
+            const aseid = aseidOrEntity;
+            this.aseid = aseid;
         }
         else {
-            this.fromDB(identity);
+            const entity = aseidOrEntity;
+            this.fromDB(entity);
         }
     }
     fromDB(dbEntity) {
-        this.id = dbEntity.id;
-        this.identity = dbEntity.identity;
+        this.aseid = dbEntity.aseid;
         if (dbEntity.created_at)
             this.createdAt = new Date(dbEntity.created_at);
         if (dbEntity.updated_at)
