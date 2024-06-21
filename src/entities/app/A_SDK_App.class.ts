@@ -29,7 +29,7 @@ export class A_SDK_App extends A_Entity<
     }
 
 
-    constructor(aseidOrEntity: string | A_SDK_TYPES__App_JSONEntity) {
+    constructor(aseidOrEntity: string | A_SDK_TYPES__App_JSONEntity | A_SDK_TYPES__App_APIEntity) {
 
         super(aseidOrEntity);
 
