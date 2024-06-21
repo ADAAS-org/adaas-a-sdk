@@ -13,6 +13,16 @@ exports.A_SDK_App = void 0;
 const a_auth_1 = require("@adaas/a-auth");
 const a_sdk_types_1 = require("@adaas/a-sdk-types");
 class A_SDK_App extends a_sdk_types_1.A_Entity {
+    get id() {
+        const { id } = a_sdk_types_1.A_SDK_CommonHelper.parseASEID(this.aseid);
+        const [shard, targetId] = id.split('--');
+        return shard ? parseInt(targetId) : parseInt(id);
+    }
+    get shard() {
+        const { id } = a_sdk_types_1.A_SDK_CommonHelper.parseASEID(this.aseid);
+        const [shard] = id.split('--');
+        return shard ? shard : undefined;
+    }
     constructor(aseidOrEntity) {
         super(aseidOrEntity);
         this.identifyInitializer(aseidOrEntity);
@@ -48,7 +58,7 @@ class A_SDK_App extends a_sdk_types_1.A_Entity {
     }
     getSSOUrl(redirectURL) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield a_auth_1.A_AUTH_Authenticator.getSSOUrl(redirectURL);
+            return yield a_auth_1.A_AUTH_Authenticator.getSignInUrl(redirectURL);
         });
     }
     toJSON() {

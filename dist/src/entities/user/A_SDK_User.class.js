@@ -3,6 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.A_SDK_User = void 0;
 const a_sdk_types_1 = require("@adaas/a-sdk-types");
 class A_SDK_User extends a_sdk_types_1.A_Entity {
+    get id() {
+        const { id } = a_sdk_types_1.A_SDK_CommonHelper.parseASEID(this.aseid);
+        const [shard, targetId] = id.split('--');
+        return shard ? parseInt(targetId) : parseInt(id);
+    }
+    get shard() {
+        const { id } = a_sdk_types_1.A_SDK_CommonHelper.parseASEID(this.aseid);
+        const [shard] = id.split('--');
+        return shard ? shard : undefined;
+    }
     constructor(aseidOrEntity) {
         super(typeof aseidOrEntity === 'string' ? aseidOrEntity : aseidOrEntity.aseid);
         this.identifyInitializer(aseidOrEntity);

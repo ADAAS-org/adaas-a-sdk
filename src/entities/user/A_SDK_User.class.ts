@@ -1,4 +1,4 @@
-import { A_Entity } from "@adaas/a-sdk-types";
+import { A_Entity, A_SDK_CommonHelper } from "@adaas/a-sdk-types";
 import { A_SDK_TYPES__User_APIEntity } from "./types/A_SDK_User.types";
 
 export class A_SDK_User extends A_Entity<
@@ -7,6 +7,23 @@ export class A_SDK_User extends A_Entity<
 
     createdAt?: Date;
     updatedAt?: Date;
+
+
+    get id(): number {
+        const { id } = A_SDK_CommonHelper.parseASEID(this.aseid);
+
+        const [shard, targetId] = id.split('--');
+
+        return shard ? parseInt(targetId) : parseInt(id);
+    }
+
+    get shard(): string | undefined {
+        const { id } = A_SDK_CommonHelper.parseASEID(this.aseid);
+
+        const [shard] = id.split('--');
+
+        return shard ? shard : undefined;
+    }
 
 
     constructor(aseidOrEntity: string | A_SDK_TYPES__User_APIEntity) {
