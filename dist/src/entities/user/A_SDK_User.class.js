@@ -18,21 +18,36 @@ class A_SDK_User extends a_sdk_types_1.A_Entity {
         this.identifyInitializer(aseidOrEntity);
     }
     identifyInitializer(aseidOrEntity) {
-        if (typeof aseidOrEntity === 'string') {
-            const aseid = aseidOrEntity;
-            this.aseid = aseid;
-        }
-        else {
-            const entity = aseidOrEntity;
-            this.fromDB(entity);
+        switch (true) {
+            case typeof aseidOrEntity === 'string':
+                this.aseid = aseidOrEntity;
+                break;
+            case typeof aseidOrEntity === 'object' && !!aseidOrEntity.id:
+                this.fromDB(aseidOrEntity);
+                break;
+            case typeof aseidOrEntity === 'object' && !aseidOrEntity.id:
+                this.fromJSON(aseidOrEntity);
+                break;
+            default:
+                return;
         }
     }
     fromDB(dbEntity) {
         this.aseid = dbEntity.aseid;
-        if (dbEntity.created_at)
-            this.createdAt = new Date(dbEntity.created_at);
-        if (dbEntity.updated_at)
-            this.updatedAt = new Date(dbEntity.updated_at);
+        this.createdAt = new Date(dbEntity.created_at);
+        this.updatedAt = new Date(dbEntity.updated_at);
+    }
+    fromJSON(serialized) {
+        this.aseid = serialized.aseid;
+        this.createdAt = new Date(serialized.createdAt);
+        this.updatedAt = new Date(serialized.updatedAt);
+    }
+    toJSON() {
+        return {
+            aseid: this.aseid,
+            createdAt: this.createdAt ? this.createdAt.toISOString() : '',
+            updatedAt: this.updatedAt ? this.updatedAt.toISOString() : ''
+        };
     }
 }
 exports.A_SDK_User = A_SDK_User;

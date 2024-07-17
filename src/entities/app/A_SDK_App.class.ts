@@ -78,14 +78,11 @@ export class A_SDK_App extends A_Entity<
     }
 
 
-    async getSSOUrl(redirectURL: string) {
-        return await A_AUTH_Authenticator.getSignInUrl(redirectURL);
-    }
-
-
     toJSON(): A_SDK_TYPES__App_JSONEntity {
         return {
             aseid: this.aseid,
+            scope: this.scope,
+            namespace: this.namespace,
             name: this.name,
             description: this.description,
             createdAt: this.createdAt!.toISOString(),

@@ -1,16 +1,6 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.A_SDK_App = void 0;
-const a_auth_1 = require("@adaas/a-auth");
 const a_sdk_types_1 = require("@adaas/a-sdk-types");
 class A_SDK_App extends a_sdk_types_1.A_Entity {
     get id() {
@@ -56,14 +46,11 @@ class A_SDK_App extends a_sdk_types_1.A_Entity {
         this.createdAt = new Date(serialized.createdAt);
         this.updatedAt = new Date(serialized.updatedAt);
     }
-    getSSOUrl(redirectURL) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield a_auth_1.A_AUTH_Authenticator.getSignInUrl(redirectURL);
-        });
-    }
     toJSON() {
         return {
             aseid: this.aseid,
+            scope: this.scope,
+            namespace: this.namespace,
             name: this.name,
             description: this.description,
             createdAt: this.createdAt.toISOString(),

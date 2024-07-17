@@ -1,5 +1,5 @@
 import { A_Entity, A_SDK_CommonHelper } from "@adaas/a-sdk-types";
-import { A_SDK_TYPES__User_APIEntity } from "./types/A_SDK_User.types";
+import { A_SDK_TYPES__User_APIEntity, A_SDK_TYPES__User_JSONEntity } from "./types/A_SDK_User.types";
 
 export class A_SDK_User extends A_Entity<
     A_SDK_TYPES__User_APIEntity
@@ -33,15 +33,23 @@ export class A_SDK_User extends A_Entity<
     }
 
 
-    protected identifyInitializer(aseidOrEntity: string | A_SDK_TYPES__User_APIEntity) {
-        if (typeof aseidOrEntity === 'string') {
-            const aseid = aseidOrEntity as string;
+    protected identifyInitializer(aseidOrEntity: string | A_SDK_TYPES__User_APIEntity | A_SDK_TYPES__User_JSONEntity | undefined) {
 
-            this.aseid = aseid;
-        } else {
-            const entity = aseidOrEntity as A_SDK_TYPES__User_APIEntity;
+        switch (true) {
+            case typeof aseidOrEntity === 'string':
+                this.aseid = aseidOrEntity as string;
+                break;
 
-            this.fromDB(entity);
+            case typeof aseidOrEntity === 'object' && !!(aseidOrEntity as A_SDK_TYPES__User_APIEntity).id:
+                this.fromDB(aseidOrEntity as A_SDK_TYPES__User_APIEntity);
+                break;
+
+            case typeof aseidOrEntity === 'object' && !(aseidOrEntity as A_SDK_TYPES__User_APIEntity).id:
+                this.fromJSON(aseidOrEntity as A_SDK_TYPES__User_JSONEntity);
+                break;
+
+            default:
+                return;
         }
     }
 
@@ -49,16 +57,27 @@ export class A_SDK_User extends A_Entity<
     private fromDB(dbEntity: A_SDK_TYPES__User_APIEntity) {
         this.aseid = dbEntity.aseid;
 
-        if (dbEntity.created_at)
-            this.createdAt = new Date(dbEntity.created_at);
-        if (dbEntity.updated_at)
-            this.updatedAt = new Date(dbEntity.updated_at);
+        this.createdAt = new Date(dbEntity.created_at);
+        this.updatedAt = new Date(dbEntity.updated_at);
     }
 
-    // toJSON(): A_SDK_TYPES__User_APIEntity {
-    //     return {
-    //         id: this.id!,
-    //         identity: this.identity,
-    //     }
-    // }
+
+    private fromJSON(serialized: A_SDK_TYPES__User_JSONEntity) {
+        this.aseid = serialized.aseid;
+
+        this.createdAt = new Date(serialized.createdAt);
+        this.updatedAt = new Date(serialized.updatedAt);
+    }
+
+
+
+
+    toJSON(): A_SDK_TYPES__User_JSONEntity {
+        return {
+            aseid: this.aseid,
+            createdAt: this.createdAt ? this.createdAt.toISOString() : '',
+            updatedAt: this.updatedAt ? this.updatedAt.toISOString() : ''
+
+        }
+    }
 }

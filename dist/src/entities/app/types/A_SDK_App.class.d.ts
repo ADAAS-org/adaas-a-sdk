@@ -9,6 +9,8 @@ export type A_SDK_TYPES__App_APIEntity = {
 export type A_SDK_TYPES__App_JSONEntity = {
     name: string;
     description?: string;
+    scope: string;
+    namespace: string;
     createdAt: string;
     updatedAt: string;
 } & A_SDK_TYPES__IAEntity;
