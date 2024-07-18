@@ -12,23 +12,6 @@ export class A_SDK_App extends A_Entity<
     updatedAt?: Date;
 
 
-    get id(): number {
-        const { id } = A_SDK_CommonHelper.parseASEID(this.aseid);
-
-        const [shard, targetId] = id.split('--');
-
-        return shard ? parseInt(targetId) : parseInt(id);
-    }
-
-    get shard(): string | undefined {
-        const { id } = A_SDK_CommonHelper.parseASEID(this.aseid);
-
-        const [shard] = id.split('--');
-
-        return shard ? shard : undefined;
-    }
-
-
     constructor(aseidOrEntity: string | A_SDK_TYPES__App_JSONEntity | A_SDK_TYPES__App_APIEntity) {
 
         super(aseidOrEntity);
@@ -44,11 +27,11 @@ export class A_SDK_App extends A_Entity<
                 this.aseid = aseidOrEntity as string;
                 break;
 
-            case typeof aseidOrEntity === 'object' && !!(aseidOrEntity as A_SDK_TYPES__App_APIEntity).id:
+            case typeof aseidOrEntity === 'object' && !!(aseidOrEntity as A_SDK_TYPES__App_APIEntity).aseid:
                 this.fromDB(aseidOrEntity as A_SDK_TYPES__App_APIEntity);
                 break;
 
-            case typeof aseidOrEntity === 'object' && !(aseidOrEntity as A_SDK_TYPES__App_APIEntity).id:
+            case typeof aseidOrEntity === 'object' && !(aseidOrEntity as A_SDK_TYPES__App_APIEntity).aseid:
                 this.fromJSON(aseidOrEntity as A_SDK_TYPES__App_JSONEntity);
                 break;
 

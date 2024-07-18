@@ -3,16 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.A_SDK_App = void 0;
 const a_sdk_types_1 = require("@adaas/a-sdk-types");
 class A_SDK_App extends a_sdk_types_1.A_Entity {
-    get id() {
-        const { id } = a_sdk_types_1.A_SDK_CommonHelper.parseASEID(this.aseid);
-        const [shard, targetId] = id.split('--');
-        return shard ? parseInt(targetId) : parseInt(id);
-    }
-    get shard() {
-        const { id } = a_sdk_types_1.A_SDK_CommonHelper.parseASEID(this.aseid);
-        const [shard] = id.split('--');
-        return shard ? shard : undefined;
-    }
     constructor(aseidOrEntity) {
         super(aseidOrEntity);
         this.identifyInitializer(aseidOrEntity);
@@ -22,10 +12,10 @@ class A_SDK_App extends a_sdk_types_1.A_Entity {
             case typeof aseidOrEntity === 'string':
                 this.aseid = aseidOrEntity;
                 break;
-            case typeof aseidOrEntity === 'object' && !!aseidOrEntity.id:
+            case typeof aseidOrEntity === 'object' && !!aseidOrEntity.aseid:
                 this.fromDB(aseidOrEntity);
                 break;
-            case typeof aseidOrEntity === 'object' && !aseidOrEntity.id:
+            case typeof aseidOrEntity === 'object' && !aseidOrEntity.aseid:
                 this.fromJSON(aseidOrEntity);
                 break;
             default:

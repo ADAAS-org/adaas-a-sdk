@@ -1,12 +1,13 @@
 import { A_SDK_TYPES__IAEntity } from "@adaas/a-sdk-types";
 export type A_SDK_TYPES__App_APIEntity = {
-    id: number;
+    aseid: string;
     name: string;
     description?: string;
     created_at: Date;
     updated_at: Date;
 } & A_SDK_TYPES__IAEntity;
 export type A_SDK_TYPES__App_JSONEntity = {
+    aseid: string;
     name: string;
     description?: string;
     scope: string;
