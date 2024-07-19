@@ -3,8 +3,8 @@ export type A_SDK_TYPES__App_APIEntity = {
     aseid: string;
     name: string;
     description?: string;
-    created_at: Date;
-    updated_at: Date;
+    created_at: string;
+    updated_at: string;
 } & A_SDK_TYPES__IAEntity;
 export type A_SDK_TYPES__App_JSONEntity = {
     aseid: string;

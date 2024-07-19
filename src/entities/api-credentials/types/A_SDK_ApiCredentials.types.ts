@@ -8,8 +8,8 @@ export type A_SDK_TYPES__ApiCredentials_APIEntity = {
     User: A_SDK_TYPES__User_APIEntity,
     App?: A_SDK_TYPES__App_APIEntity
 
-    created_at: Date,
-    updated_at: Date
+    created_at: string,
+    updated_at: string
 }
 
 

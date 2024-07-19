@@ -1,8 +1,8 @@
 export type A_SDK_TYPES__User_APIEntity = {
     id: number,
     aseid: string
-    created_at: Date,
-    updated_at: Date
+    created_at: string,
+    updated_at: string
 }
 
 
