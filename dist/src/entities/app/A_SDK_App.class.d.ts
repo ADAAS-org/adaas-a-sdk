@@ -1,13 +1,8 @@
-import { A_SDK_TYPES__App_APIEntity, A_SDK_TYPES__App_JSONEntity } from "./types/A_SDK_App.class";
-import { A_Entity } from "@adaas/a-sdk-types";
-export declare class A_SDK_App extends A_Entity<A_SDK_TYPES__App_JSONEntity> {
+import { A_SDK_TYPES__App_Constructor, A_SDK_TYPES__App_Serialized } from "./A_SDK_App.types";
+import { A_SDK_BaseEntity } from "../base/A_SDK_Base.entity";
+export declare class A_SDK_App extends A_SDK_BaseEntity<A_SDK_TYPES__App_Constructor, A_SDK_TYPES__App_Serialized> {
     name: string;
     description?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-    constructor(aseidOrEntity: string | A_SDK_TYPES__App_JSONEntity | A_SDK_TYPES__App_APIEntity);
-    protected identifyInitializer(aseidOrEntity: string | A_SDK_TYPES__App_APIEntity | A_SDK_TYPES__App_JSONEntity | undefined): void;
-    private fromDB;
-    private fromJSON;
-    toJSON(): A_SDK_TYPES__App_JSONEntity;
+    fromJSON(serialized: A_SDK_TYPES__App_Serialized): void;
+    toJSON(): A_SDK_TYPES__App_Serialized;
 }

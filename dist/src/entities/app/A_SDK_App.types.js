@@ -8,4 +8,4 @@ var A_SDK_TYPES__APP_STATUSES;
     A_SDK_TYPES__APP_STATUSES["INVITED"] = "INVITED";
     A_SDK_TYPES__APP_STATUSES["TERMINATED"] = "TERMINATED";
 })(A_SDK_TYPES__APP_STATUSES || (exports.A_SDK_TYPES__APP_STATUSES = A_SDK_TYPES__APP_STATUSES = {}));
-//# sourceMappingURL=A_SDK_App.class.js.map
+//# sourceMappingURL=A_SDK_App.types.js.map

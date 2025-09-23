@@ -30,7 +30,7 @@
     "version": "echo git add .",
     "postversion": "git push --no-verify && git push --tags --no-verify && echo \"\n======Version Pushed Successfully=====\n\" ",
     "echo-version": "echo $npm_package_version",
-    "build": "tsc --declaration --project tsconfig.json && tscpaths -p tsconfig.json -s ./ -o ./dist  && rm -r ./dist/tests"
+    "build": "rm -rf ./dist && tsc --declaration --project tsconfig.json && tscpaths -p tsconfig.json -s ./ -o ./dist  && rm -r ./dist/tests"
   },
   "repository": {
     "type": "git",
@@ -48,16 +48,14 @@
   },
   "homepage": "https://github.com/ADAAS-org/adaas-adf-auth#readme",
   "dependencies": {
-    "@adaas/a-auth": "^0.0.65",
     "@adaas/a-concept": "^0.0.56",
-    "@adaas/a-utils": "^0.0.5",
-    "@types/node": "^20.10.0",
-    "axios": "^1.6.2"
+    "@adaas/a-utils": "^0.0.5"
   },
   "devDependencies": {
     "@types/chai": "^4.3.14",
     "@types/jest": "^29.5.12",
     "@types/mocha": "^10.0.6",
+    "@types/node": "^24.5.2",
     "chai": "^5.1.0",
     "dotenv": "^16.4.5",
     "jest": "^29.7.0",

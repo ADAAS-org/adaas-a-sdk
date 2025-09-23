@@ -1,13 +1,46 @@
-import { A_Entity } from "@adaas/a-sdk-types";
-import { A_SDK_TYPES__User_APIEntity, A_SDK_TYPES__User_JSONEntity } from "./types/A_SDK_User.types";
-export declare class A_SDK_User extends A_Entity<A_SDK_TYPES__User_APIEntity> {
-    createdAt?: Date;
-    updatedAt?: Date;
+import { A_Scope } from "@adaas/a-concept";
+import { A_SDK_BaseEntity } from "../base/A_SDK_Base.entity";
+import { A_SDK_TYPES__User_Constructor, A_SDK_TYPES__User_Serialized } from "./A_SDK_User.types";
+export declare class A_SDK_User extends A_SDK_BaseEntity<A_SDK_TYPES__User_Constructor, A_SDK_TYPES__User_Serialized> {
+    email: string;
+    password?: string;
+    createdAt: Date;
+    updatedAt: Date;
     get id(): number;
-    get shard(): string | undefined;
-    constructor(aseidOrEntity: string | A_SDK_TYPES__User_APIEntity);
-    protected identifyInitializer(aseidOrEntity: string | A_SDK_TYPES__User_APIEntity | A_SDK_TYPES__User_JSONEntity | undefined): void;
-    private fromDB;
-    private fromJSON;
-    toJSON(): A_SDK_TYPES__User_JSONEntity;
+    /**
+     * Verifies the user's password.
+     *
+     * @param password
+     */
+    verifyPassword(password?: string): Promise<void>;
+    /**
+     * Allows to sign out the user (e.g., invalidate tokens, clear sessions).
+     */
+    signOut(): Promise<void>;
+    /**
+     * Loads user data based on the provided email.
+     */
+    loadByEmail(email?: string): Promise<void>;
+    /**
+     * Loads user data based on available identifiers (id or email).
+     */
+    load(scope?: A_Scope): Promise<any>;
+    /**
+     * Initializes a new user entity from the provided constructor data.
+     *
+     * @param newEntity
+     */
+    fromNew(newEntity: A_SDK_TYPES__User_Constructor): void;
+    /**
+     * Initializes the user entity from a database representation.
+     *
+     * @param serialized
+     */
+    fromJSON(serialized: A_SDK_TYPES__User_Serialized): void;
+    /**
+     * Serializes the user entity to a JSON representation.
+     *
+     * @returns
+     */
+    toJSON(): A_SDK_TYPES__User_Serialized;
 }
