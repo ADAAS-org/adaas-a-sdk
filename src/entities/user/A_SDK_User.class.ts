@@ -1,83 +1,114 @@
-import { A_Entity, A_SDK_CommonHelper } from "@adaas/a-sdk-types";
-import { A_SDK_TYPES__User_APIEntity, A_SDK_TYPES__User_JSONEntity } from "./types/A_SDK_User.types";
+import { A_Feature, A_Scope } from "@adaas/a-concept";
+import { A_SDK_BaseEntity } from "../base/A_SDK_Base.entity";
+import { A_SDK_TYPES__User_Constructor, A_SDK_TYPES__User_Serialized } from "./A_SDK_User.types";
+import { A_Error } from "@adaas/a-utils";
 
-export class A_SDK_User extends A_Entity<
-    A_SDK_TYPES__User_APIEntity
+
+
+export class A_SDK_User extends A_SDK_BaseEntity<
+    A_SDK_TYPES__User_Constructor,
+    A_SDK_TYPES__User_Serialized
 > {
 
-    createdAt?: Date;
-    updatedAt?: Date;
+    email!: string;
+    password?: string;
 
+
+    createdAt!: Date;
+    updatedAt!: Date;
 
     get id(): number {
-        const { id } = A_SDK_CommonHelper.parseASEID(this.aseid);
-
-        const [shard, targetId] = id.split('--');
-
-        return shard ? parseInt(targetId) : parseInt(id);
-    }
-
-    get shard(): string | undefined {
-        const { id } = A_SDK_CommonHelper.parseASEID(this.aseid);
-
-        const [shard] = id.split('--');
-
-        return shard ? shard : undefined;
+        return Number(this.aseid.id);
     }
 
 
-    constructor(aseidOrEntity: string | A_SDK_TYPES__User_APIEntity) {
-        super(typeof aseidOrEntity === 'string' ? aseidOrEntity : aseidOrEntity.aseid);
 
-        this.identifyInitializer(aseidOrEntity);
+    /**
+     * Verifies the user's password.
+     * 
+     * @param password 
+     */
+    @A_Feature.Define({ invoke: true })
+    async verifyPassword(password?: string) {
+        // it's a good practice to check all mandatory fields here
+        if (!this.email) throw new A_Error('Email is required');
+        // password should be checked in the controller, because it's not stored in the entity
+        if (!password && !this.password) throw new A_Error('Password is required');
+
+        if (password)
+            this.password = password;
     }
 
 
-    protected identifyInitializer(aseidOrEntity: string | A_SDK_TYPES__User_APIEntity | A_SDK_TYPES__User_JSONEntity | undefined) {
+    /**
+     * Allows to sign out the user (e.g., invalidate tokens, clear sessions).
+     */
+    @A_Feature.Define({ invoke: true })
+    async signOut() { }
 
+    /**
+     * Loads user data based on the provided email.
+     */
+    @A_Feature.Define({ invoke: true })
+    async loadByEmail(email?: string) {
+        if (!email && !this.email) throw new A_Error('Email is required to load user');
+
+        if (email)
+            this.email = email;
+    }
+
+
+
+    /**
+     * Loads user data based on available identifiers (id or email).
+     */
+    @A_Feature.Define({ invoke: false })
+    async load(scope?: A_Scope): Promise<any> {
+        // select the way to load user based on available data
         switch (true) {
-            case typeof aseidOrEntity === 'string':
-                this.aseid = aseidOrEntity as string;
-                break;
-
-            case typeof aseidOrEntity === 'object' && !!(aseidOrEntity as A_SDK_TYPES__User_APIEntity).id:
-                this.fromDB(aseidOrEntity as A_SDK_TYPES__User_APIEntity);
-                break;
-
-            case typeof aseidOrEntity === 'object' && !(aseidOrEntity as A_SDK_TYPES__User_APIEntity).id:
-                this.fromJSON(aseidOrEntity as A_SDK_TYPES__User_JSONEntity);
-                break;
-
+            case !!this.id:
+                return await super.load(scope);
+            case !!this.email:
+                return await this.loadByEmail();
             default:
-                return;
+                throw new A_Error('Cannot load user: no identifier provided');
         }
     }
 
 
-    private fromDB(dbEntity: A_SDK_TYPES__User_APIEntity) {
-        this.aseid = dbEntity.aseid;
+    /**
+     * Initializes a new user entity from the provided constructor data.
+     * 
+     * @param newEntity 
+     */
+    fromNew(newEntity: A_SDK_TYPES__User_Constructor): void {
+        super.fromNew(newEntity);
 
-        this.createdAt = new Date(dbEntity.created_at);
-        this.updatedAt = new Date(dbEntity.updated_at);
+        this.email = newEntity.email;
     }
 
 
-    private fromJSON(serialized: A_SDK_TYPES__User_JSONEntity) {
-        this.aseid = serialized.aseid;
+    /**
+     * Initializes the user entity from a database representation.
+     * 
+     * @param serialized 
+     */
+    fromJSON(serialized: A_SDK_TYPES__User_Serialized): void {
+        super.fromJSON(serialized);
 
-        this.createdAt = new Date(serialized.createdAt);
-        this.updatedAt = new Date(serialized.updatedAt);
+        this.email = serialized.email;
     }
 
 
-
-
-    toJSON(): A_SDK_TYPES__User_JSONEntity {
+    /**
+     * Serializes the user entity to a JSON representation.
+     * 
+     * @returns 
+     */
+    toJSON(): A_SDK_TYPES__User_Serialized {
         return {
-            aseid: this.aseid,
-            createdAt: this.createdAt ? this.createdAt.toISOString() : '',
-            updatedAt: this.updatedAt ? this.updatedAt.toISOString() : ''
-
+            ...super.toJSON(),
+            email: this.email,
         }
     }
 }

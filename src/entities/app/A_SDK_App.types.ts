@@ -1,23 +1,19 @@
-import { A_SDK_TYPES__IAEntity } from "@adaas/a-sdk-types"
+import { A_TYPES__Entity_JSON } from "@adaas/a-concept"
+import { A_SDK_TYPES__BaseEntity_Serialized } from "../base/A_SDK_Base.types"
 
-export type A_SDK_TYPES__App_APIEntity = {
-    aseid: string,
+export type A_SDK_TYPES__App_Constructor = {
     name: string,
     description?: string,
-    created_at: string,
-    updated_at: string
-} & A_SDK_TYPES__IAEntity
+}
 
 
-export type A_SDK_TYPES__App_JSONEntity = {
+export type A_SDK_TYPES__App_Serialized = {
     aseid: string,
     name: string,
     description?: string,
     scope: string,
     namespace: string,
-    createdAt: string,
-    updatedAt: string
-} & A_SDK_TYPES__IAEntity
+} & A_SDK_TYPES__BaseEntity_Serialized
 
 
 // ==================APP STATUSES===================
