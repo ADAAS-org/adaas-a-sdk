@@ -30,9 +30,14 @@
       "node_modules/@types"
     ],
     "paths": {
+      "@adaas/a-sdk/a-concept/entities/*": ["src/entities/*"],
+      "@adaas/a-sdk/a-concept/components/*": ["src/components/*"],
+      "@adaas/a-sdk/a-concept/commands/*": ["src/commands/*"],
+      "@adaas/a-sdk/a-concept/containers/*": ["src/containers/*"],
+      "@adaas/a-sdk/a-concept/context/*": ["src/context/*"],
+
+
       "@adaas/a-sdk/constants/*": ["src/constants/*"],
-      "@adaas/a-sdk/entities/*": ["src/entities/*"],
-      "@adaas/a-sdk/global/*": ["src/global/*"],
       "@adaas/a-sdk/types/*": ["src/types/*"],
       "@adaas/a-sdk/helpers/*": ["src/helpers/*"]
     },
