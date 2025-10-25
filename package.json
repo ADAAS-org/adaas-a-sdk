@@ -1,6 +1,6 @@
 {
   "name": "@adaas/a-sdk",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "The main sdk that contains of connectors to many ADAAS services for simple manipulations across major entities",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -31,7 +31,7 @@
     "postversion": "git push --no-verify && git push --tags --no-verify && echo \"\n======Version Pushed Successfully=====\n\" ",
     "echo-version": "echo $npm_package_version",
     "build": "rm -rf ./dist && tsc --declaration --project tsconfig.build.json && tscpaths -p tsconfig.build.json -s ./ -o ./dist"
-  }, 
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ADAAS-org/adaas-adf-auth.git"
