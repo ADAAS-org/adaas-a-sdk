@@ -11,7 +11,7 @@ export type A_SDK_TYPES__App_Serialized = {
     name: string,
     description?: string,
     scope: string,
-    namespace: string,
+    concept: string,
 } & A_SDK_TYPES__BaseEntity_Serialized
 
 

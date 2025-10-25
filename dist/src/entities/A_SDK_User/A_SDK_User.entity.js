@@ -17,8 +17,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.A_SDK_User = void 0;
 const a_concept_1 = require("@adaas/a-concept");
-const a_utils_1 = require("@adaas/a-utils");
 const A_SDK_Base_entity_1 = require("../A_SDK_BaseEntity/A_SDK_Base.entity");
+const A_SDK_User_error_1 = require("./A_SDK_User.error");
 class A_SDK_User extends A_SDK_Base_entity_1.A_SDK_BaseEntity {
     get id() {
         return Number(this.aseid.id);
@@ -32,10 +32,10 @@ class A_SDK_User extends A_SDK_Base_entity_1.A_SDK_BaseEntity {
         return __awaiter(this, void 0, void 0, function* () {
             // it's a good practice to check all mandatory fields here
             if (!this.email)
-                throw new a_utils_1.A_Error('Email is required');
+                throw new A_SDK_User_error_1.A_SDK_UserError(A_SDK_User_error_1.A_SDK_UserError.ValidationError, 'Email is required to verify password');
             // password should be checked in the controller, because it's not stored in the entity
             if (!password && !this.password)
-                throw new a_utils_1.A_Error('Password is required');
+                throw new A_SDK_User_error_1.A_SDK_UserError(A_SDK_User_error_1.A_SDK_UserError.ValidationError, 'Password is required');
             if (password)
                 this.password = password;
         });
@@ -52,7 +52,7 @@ class A_SDK_User extends A_SDK_Base_entity_1.A_SDK_BaseEntity {
     loadByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!email && !this.email)
-                throw new a_utils_1.A_Error('Email is required to load user');
+                throw new A_SDK_User_error_1.A_SDK_UserError(A_SDK_User_error_1.A_SDK_UserError.LoadError, 'Cannot load user: email not provided');
             if (email)
                 this.email = email;
         });
@@ -72,7 +72,7 @@ class A_SDK_User extends A_SDK_Base_entity_1.A_SDK_BaseEntity {
                 case !!this.email:
                     return yield this.loadByEmail();
                 default:
-                    throw new a_utils_1.A_Error('Cannot load user: no identifier provided');
+                    throw new A_SDK_User_error_1.A_SDK_UserError(A_SDK_User_error_1.A_SDK_UserError.LoadError, 'Cannot load user: no identifier (id or email) provided');
             }
         });
     }

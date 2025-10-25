@@ -1,4 +1,4 @@
-import { A_TYPES__Entity_JSON } from "@adaas/a-concept"
+import { A_TYPES__Entity_Serialized } from "@adaas/a-concept"
 import { A_SDK_TYPES__BaseEntity_DB, A_SDK_TYPES__BaseEntity_Serialized } from "../A_SDK_BaseEntity/A_SDK_Base.types"
 
 export type A_SDK_TYPES__User_DB = {

@@ -14,7 +14,7 @@ describe('A-User tests', () => {
         expect(user.aseid).toBeDefined();
         expect(user.aseid).not.toBeNull();
         expect(user.aseid.entity).toBe('a-sdk-user');
-        expect(user.aseid.namespace).toBe('a-sdk');
+        expect(user.aseid.concept).toBe('a-sdk');
         expect(user.aseid.scope).toBe('core');
     });
 

@@ -6,7 +6,6 @@ export type A_SDK_TYPES__ApiCredentials_Constructor = {
     aseid: string
 }
 
-
 export type A_SDK_TYPES__ApiCredentials_Serialized = {
     aseid: string,
 

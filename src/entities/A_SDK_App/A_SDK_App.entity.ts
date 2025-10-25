@@ -30,8 +30,8 @@ export class A_SDK_App extends A_SDK_BaseEntity<
     toJSON(): A_SDK_TYPES__App_Serialized {
         return {
             ...super.toJSON(),
-            scope: this.scope,
-            namespace: this.namespace,
+            scope: this.aseid.scope,
+            concept: this.aseid.concept,
             name: this.name,
             description: this.description,
         }

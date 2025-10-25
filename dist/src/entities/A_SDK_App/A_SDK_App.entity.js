@@ -14,7 +14,7 @@ class A_SDK_App extends A_SDK_Base_entity_1.A_SDK_BaseEntity {
         this.description = serialized.description;
     }
     toJSON() {
-        return Object.assign(Object.assign({}, super.toJSON()), { scope: this.scope, namespace: this.namespace, name: this.name, description: this.description });
+        return Object.assign(Object.assign({}, super.toJSON()), { scope: this.aseid.scope, concept: this.aseid.concept, name: this.name, description: this.description });
     }
 }
 exports.A_SDK_App = A_SDK_App;

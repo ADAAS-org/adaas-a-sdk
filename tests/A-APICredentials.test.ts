@@ -12,7 +12,7 @@ describe('A-App tests', () => {
         expect(api.aseid).toBeDefined();
         expect(api.aseid).not.toBeNull();
         expect(api.aseid.entity).toBe('a-sdk-api-credentials');
-        expect(api.aseid.namespace).toBe('a-sdk');
+        expect(api.aseid.concept).toBe('a-sdk');
         expect(api.aseid.scope).toBe('core');
     });
 

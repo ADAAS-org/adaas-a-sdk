@@ -1,7 +1,7 @@
 import { A_Feature, A_Scope } from "@adaas/a-concept";
-import { A_Error } from "@adaas/a-utils";
 import { A_SDK_BaseEntity } from "../A_SDK_BaseEntity/A_SDK_Base.entity";
 import { A_SDK_TYPES__User_Constructor, A_SDK_TYPES__User_Serialized } from "./A_SDK_User.types";
+import { A_SDK_UserError } from "./A_SDK_User.error";
 
 
 
@@ -31,9 +31,15 @@ export class A_SDK_User extends A_SDK_BaseEntity<
     @A_Feature.Define({ invoke: true })
     async verifyPassword(password?: string) {
         // it's a good practice to check all mandatory fields here
-        if (!this.email) throw new A_Error('Email is required');
+        if (!this.email) throw new A_SDK_UserError(
+            A_SDK_UserError.ValidationError,
+            'Email is required to verify password'
+        );
         // password should be checked in the controller, because it's not stored in the entity
-        if (!password && !this.password) throw new A_Error('Password is required');
+        if (!password && !this.password) throw new A_SDK_UserError(
+            A_SDK_UserError.ValidationError,
+            'Password is required'
+        );
 
         if (password)
             this.password = password;
@@ -51,7 +57,10 @@ export class A_SDK_User extends A_SDK_BaseEntity<
      */
     @A_Feature.Define({ invoke: true })
     async loadByEmail(email?: string) {
-        if (!email && !this.email) throw new A_Error('Email is required to load user');
+        if (!email && !this.email) throw new A_SDK_UserError(
+            A_SDK_UserError.LoadError,
+            'Cannot load user: email not provided'
+        );
 
         if (email)
             this.email = email;
@@ -71,7 +80,10 @@ export class A_SDK_User extends A_SDK_BaseEntity<
             case !!this.email:
                 return await this.loadByEmail();
             default:
-                throw new A_Error('Cannot load user: no identifier provided');
+                throw new A_SDK_UserError(
+                    A_SDK_UserError.LoadError,
+                    'Cannot load user: no identifier (id or email) provided'
+                );
         }
     }
 
